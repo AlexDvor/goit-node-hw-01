@@ -1,4 +1,4 @@
-const { uuid } = require("uuidv4");
+const { v4 } = require("uuid");
 const fs = require("fs/promises");
 const path = require("path");
 
@@ -35,7 +35,7 @@ const removeContact = async (contactId) => {
 
 const addContact = async (name, email, phone) => {
   const contacts = await listContacts();
-  const randomId = uuid().slice(0, 5);
+  const randomId = v4().slice(0, 5);
   const newContacts = {
     id: randomId,
     name,
