@@ -1,4 +1,3 @@
-const { v4 } = require("uuid");
 const fs = require("fs/promises");
 const path = require("path");
 
@@ -24,18 +23,19 @@ const getContactById = async (contactId) => {
 
 const removeContact = async (contactId) => {
   const contacts = await listContacts();
-  const idx = contacts.findIndex((item) => item.id === contactId);
+  const idx = contacts.findIndex((item) => item.id === Number(contactId));
   if (idx === -1) {
     return null;
   }
   const updatedData = contacts.filter((_, index) => index !== idx);
   await fs.writeFile(contactsPath, JSON.stringify(updatedData));
-  return contacts[idx];
+  return listContacts();
 };
 
 const addContact = async (name, email, phone) => {
   const contacts = await listContacts();
-  const randomId = v4().slice(0, 5);
+  const randomId = Math.floor(Math.random() * (300 - 50) + 5);
+
   const newContacts = {
     id: randomId,
     name,
@@ -44,7 +44,7 @@ const addContact = async (name, email, phone) => {
   };
   contacts.push(newContacts);
   await fs.writeFile(contactsPath, JSON.stringify(contacts));
-  return newContacts;
+  return listContacts();
 };
 
 module.exports = { listContacts, getContactById, removeContact, addContact };
