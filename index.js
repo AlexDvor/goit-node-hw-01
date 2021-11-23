@@ -45,4 +45,8 @@ program.parse(process.argv);
 
 const options = program.opts();
 
-invokeAction(options);
+// invokeAction(options);
+
+(async () => {
+  await invokeAction(options);
+})();
